@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED47CCB0199AFBB90000535C /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED47CCAF199AFBB90000535C /* Photo.swift */; };
 		ED4D0515195F4B4700FD1ADD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4D0514195F4B4700FD1ADD /* AppDelegate.swift */; };
 		ED4D0517195F4B4700FD1ADD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED4D0516195F4B4700FD1ADD /* Images.xcassets */; };
 		ED4D0523195F4B4700FD1ADD /* NoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4D0522195F4B4700FD1ADD /* NoteTests.swift */; };
+		ED4D0530195F8CD800FD1ADD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4D052F195F8CD800FD1ADD /* MapKit.framework */; };
+		ED4D0532195F8EC800FD1ADD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4D0531195F8EC800FD1ADD /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,6 +26,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED47CCAF199AFBB90000535C /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Photo.swift; path = Note/Photo.swift; sourceTree = "<group>"; };
 		ED4D050F195F4B4700FD1ADD /* Note.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Note.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED4D0513195F4B4700FD1ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED4D0514195F4B4700FD1ADD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +34,8 @@
 		ED4D051C195F4B4700FD1ADD /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED4D0521195F4B4700FD1ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED4D0522195F4B4700FD1ADD /* NoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTests.swift; sourceTree = "<group>"; };
+		ED4D052F195F8CD800FD1ADD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		ED4D0531195F8EC800FD1ADD /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = "View Controllers/MapViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED4D0530195F8CD800FD1ADD /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,9 +60,11 @@
 		ED4D0506195F4B4700FD1ADD = {
 			isa = PBXGroup;
 			children = (
+				ED47CCAF199AFBB90000535C /* Photo.swift */,
 				ED4D0511195F4B4700FD1ADD /* Note */,
 				ED4D051F195F4B4700FD1ADD /* NoteTests */,
 				ED4D0510195F4B4700FD1ADD /* Products */,
+				ED4D052F195F8CD800FD1ADD /* MapKit.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				ED4D0514195F4B4700FD1ADD /* AppDelegate.swift */,
+				ED4D052E195F5AFE00FD1ADD /* VIew Controllers */,
 				ED4D0516195F4B4700FD1ADD /* Images.xcassets */,
 				ED4D0512195F4B4700FD1ADD /* Supporting Files */,
 			);
@@ -101,6 +111,14 @@
 				ED4D0521195F4B4700FD1ADD /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ED4D052E195F5AFE00FD1ADD /* VIew Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				ED4D0531195F8EC800FD1ADD /* MapViewController.swift */,
+			);
+			name = "VIew Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +170,11 @@
 				TargetAttributes = {
 					ED4D050E195F4B4700FD1ADD = {
 						CreatedOnToolsVersion = 6.0;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					ED4D051B195F4B4700FD1ADD = {
 						CreatedOnToolsVersion = 6.0;
@@ -200,6 +223,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED47CCB0199AFBB90000535C /* Photo.swift in Sources */,
+				ED4D0532195F8EC800FD1ADD /* MapViewController.swift in Sources */,
 				ED4D0515195F4B4700FD1ADD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,6 +402,7 @@
 				ED4D0528195F4B4700FD1ADD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ED4D0529195F4B4700FD1ADD /* Build configuration list for PBXNativeTarget "NoteTests" */ = {
 			isa = XCConfigurationList;
@@ -385,6 +411,7 @@
 				ED4D052B195F4B4700FD1ADD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -22,6 +22,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationUsageDescription</key>
+	<string>Note needs your location to tell where you are</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Note needs your location to tell where you are</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
