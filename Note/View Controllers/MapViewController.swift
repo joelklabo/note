@@ -51,9 +51,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         locationManager.startUpdatingLocation()
     }
     
+    func queryPhotosNearLocation(location:CLLocation) {
+        println("Got a location \(location)")
+        
+//        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(CLLocation *testLocation, NSDictionary *bindings) {
+//            return ([testLocation distanceFromLocation:targetLocation] <= maxRadius);
+//            }];
+        
+        let locationPredicate = NSPredicate(value: true)
+        let photoQuery = CKQuery(recordType: "Photo", predicate: locationPredicate)
+        
+        let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
+        
+        publicDatabase.performQuery(photoQuery, inZoneWithID: nil) { (photos, error) -> Void in
+            println("Photos \(photos)")
+            println(error)
+        }
+        
+    }
+    
     func savePhotoToCloud(photo:Photo) {
         let photoRecord = CKRecord(recordType: "Photo")
-//        photoRecord.setValue(photo.photo, forKey: "photo")
+        photoRecord.setValue(CKAssetFromUIImage(photo.photo), forKey: "photo")
         photoRecord.setValue(photo.location, forKey: "location")
         
         let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
@@ -61,6 +80,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
             println(record)
             println(error)
         })
+    }
+    
+    func CKAssetFromUIImage(image:UIImage) -> CKAsset {
+        UIGraphicsBeginImageContext(image.size);
+        image.drawInRect(CGRectMake(0, 0, image.size.width, image.size.height))
+        let data = UIImageJPEGRepresentation(UIGraphicsGetImageFromCurrentImageContext(), 0.75);
+        UIGraphicsEndImageContext();
+        
+        let cachesDirectoryURL = NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil)
+        let temporaryName = NSUUID.UUID().UUIDString.stringByAppendingPathExtension("jpeg")
+        let localURL = cachesDirectoryURL.URLByAppendingPathComponent(temporaryName)
+        data.writeToURL(localURL, atomically: true)
+        
+        return CKAsset(fileURL: localURL)
     }
     
     // Note Button Tapped callback
@@ -111,7 +144,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         let region:MKCoordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 50, 50)
         mapView.setRegion(region, animated: true)
         
-        // Keep track of the current location
+        // Got first location
+        if (!currentLocation) {
+            queryPhotosNearLocation(location)
+        }
+        
         currentLocation = location
     }
     
