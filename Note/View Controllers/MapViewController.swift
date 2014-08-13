@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CloudKit
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -16,7 +17,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
     let mapView:MKMapView = MKMapView()
     let cameraButton:UIButton = UIButton()
     
-    var currentLocation:CLLocationCoordinate2D!
+    var currentLocation:CLLocation!
     
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
@@ -48,6 +49,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+    }
+    
+    func savePhotoToCloud(photo:Photo) {
+        let photoRecord = CKRecord(recordType: "Photo")
+//        photoRecord.setValue(photo.photo, forKey: "photo")
+        photoRecord.setValue(photo.location, forKey: "location")
+        
+        let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
+        publicDatabase.saveRecord(photoRecord, completionHandler: { (record, error) -> Void in
+            println(record)
+            println(error)
+        })
     }
     
     // Note Button Tapped callback
@@ -82,8 +95,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             let photo:Photo = Photo(photo: image as UIImage, location: currentLocation)
-            println(photo.photo)
-            println(photo.location)
+            savePhotoToCloud(photo)
+            
         } else {
             // Something went wrong
         }
@@ -99,7 +112,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         mapView.setRegion(region, animated: true)
         
         // Keep track of the current location
-        currentLocation = location.coordinate
+        currentLocation = location
     }
     
 }

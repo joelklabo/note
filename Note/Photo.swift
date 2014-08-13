@@ -9,7 +9,14 @@
 import UIKit
 import CoreLocation
 
-struct Photo {
+class Photo {
+    
     var photo:UIImage
-    var location:CLLocationCoordinate2D
+    var location:CLLocation
+    
+    init(photo:UIImage, location:CLLocation) {
+        self.photo = photo
+        self.location = location
+    }
+    
 }
