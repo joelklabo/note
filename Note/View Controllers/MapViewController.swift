@@ -51,6 +51,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         locationManager.startUpdatingLocation()
     }
     
+    func MKAnnotationViewFromPhoto(photo:Photo) -> MKAnnotationView {
+        let annotationView = MKAnnotationView(annotation:photo, reuseIdentifier: nil)
+        return annotationView
+    }
+    
     func queryPhotosNearLocation(location:CLLocation) {
         println("Got a location \(location)")
         
@@ -63,11 +68,32 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         
         let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
         
-        publicDatabase.performQuery(photoQuery, inZoneWithID: nil) { (photos, error) -> Void in
-            println("Photos \(photos)")
+        
+        // Use query operation in the background
+        publicDatabase.performQuery(photoQuery, inZoneWithID: nil) { (records, error) -> Void in
+            println("Photos \(records.count)")
             println(error)
+            
+            let recordArray = records as [CKRecord]
+            
+            var photoArray = recordArray.map {
+                (var record) -> Photo in
+                let imageAsset:CKAsset = record.valueForKey("photo") as CKAsset
+                let location:CLLocation = record.valueForKey("location") as CLLocation
+                let photo = Photo(photo: self.getUIImageFromCKAssetFileUrl(imageAsset), location: location)
+                return photo
+            }
+            
+            self.mapView.addAnnotations(photoArray)
+
         }
         
+    }
+    
+    func getUIImageFromCKAssetFileUrl(asset:CKAsset) -> UIImage {
+        let data = NSData.dataWithContentsOfURL(asset.fileURL, options: nil, error: nil)
+        let image = UIImage(data: data)
+        return image
     }
     
     func savePhotoToCloud(photo:Photo) {

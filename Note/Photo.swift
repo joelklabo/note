@@ -8,15 +8,20 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
-class Photo {
+class Photo: NSObject, MKAnnotation {
     
     var photo:UIImage
     var location:CLLocation
+    var coordinate:CLLocationCoordinate2D
+    var title:NSString
     
     init(photo:UIImage, location:CLLocation) {
         self.photo = photo
         self.location = location
+        self.coordinate = location.coordinate
+        self.title = "hi"
     }
     
 }
