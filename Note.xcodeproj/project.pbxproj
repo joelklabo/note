@@ -14,6 +14,7 @@
 		ED4D0523195F4B4700FD1ADD /* NoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4D0522195F4B4700FD1ADD /* NoteTests.swift */; };
 		ED4D0530195F8CD800FD1ADD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4D052F195F8CD800FD1ADD /* MapKit.framework */; };
 		ED4D0532195F8EC800FD1ADD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4D0531195F8EC800FD1ADD /* MapViewController.swift */; };
+		EDCD7274199C2F4F001CE7FB /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD7273199C2F4F001CE7FB /* ImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		ED4D0522195F4B4700FD1ADD /* NoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTests.swift; sourceTree = "<group>"; };
 		ED4D052F195F8CD800FD1ADD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		ED4D0531195F8EC800FD1ADD /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = "View Controllers/MapViewController.swift"; sourceTree = "<group>"; };
+		EDCD7273199C2F4F001CE7FB /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		ED4D0506195F4B4700FD1ADD = {
 			isa = PBXGroup;
 			children = (
+				EDCD7273199C2F4F001CE7FB /* ImageViewController.swift */,
 				ED47CCB2199B06D00000535C /* CloudKit.framework */,
 				ED47CCAF199AFBB90000535C /* Photo.swift */,
 				ED4D0511195F4B4700FD1ADD /* Note */,
@@ -235,6 +238,7 @@
 			files = (
 				ED47CCB0199AFBB90000535C /* Photo.swift in Sources */,
 				ED4D0532195F8EC800FD1ADD /* MapViewController.swift in Sources */,
+				EDCD7274199C2F4F001CE7FB /* ImageViewController.swift in Sources */,
 				ED4D0515195F4B4700FD1ADD /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,7 +11,7 @@ import MapKit
 import CoreLocation
 import CloudKit
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MKMapViewDelegate {
     
     let locationManager:CLLocationManager = CLLocationManager()
     let mapView:MKMapView = MKMapView()
@@ -32,6 +32,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         
         self.view.addSubview(mapView)
         mapView.frame = UIScreen.mainScreen().bounds
+        mapView.delegate = self
         
         mapView.addSubview(cameraButton)
         
@@ -120,6 +121,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         data.writeToURL(localURL, atomically: true)
         
         return CKAsset(fileURL: localURL)
+    }
+    
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        let photo = view.annotation as Photo
+        self.presentViewController(ImageViewController(image: photo.photo), animated: true, completion: nil)
     }
     
     // Note Button Tapped callback
