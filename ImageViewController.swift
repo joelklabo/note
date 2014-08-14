@@ -19,8 +19,14 @@ class ImageViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.whiteColor()
+        
         self.view.addSubview(self.imageView)
-        self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height)
+
+        let imageSize:CGFloat = 320
+        
+        let imageRect = CGRectMake(0, 0, imageSize, imageSize)
+        self.imageView.frame = imageRect
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("imageViewTapped"))
         self.view.addGestureRecognizer(tapGestureRecognizer)

@@ -36,10 +36,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         
         mapView.addSubview(cameraButton)
         
-        let cameraButtonHeight:CGFloat = 60.0
+        let cameraButtonHeight:CGFloat = 80.0
         cameraButton.frame = CGRectMake(0, mapView.frame.height - cameraButtonHeight, mapView.frame.width, cameraButtonHeight)
-        cameraButton.backgroundColor = UIColor.greenColor()
-        
+        cameraButton.backgroundColor = UIColor.whiteColor()
+                
         cameraButton.addTarget(self, action: "cameraButtonTapped", forControlEvents: .TouchUpInside)
         
         initializeLocationManager()
@@ -58,17 +58,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
     }
     
     func queryPhotosNearLocation(location:CLLocation) {
-        println("Got a location \(location)")
-        
-//        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(CLLocation *testLocation, NSDictionary *bindings) {
-//            return ([testLocation distanceFromLocation:targetLocation] <= maxRadius);
-//            }];
         
         let locationPredicate = NSPredicate(value: true)
         let photoQuery = CKQuery(recordType: "Photo", predicate: locationPredicate)
         
         let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-        
         
         // Use query operation in the background
         publicDatabase.performQuery(photoQuery, inZoneWithID: nil) { (records, error) -> Void in
@@ -86,7 +80,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
             }
             
             self.mapView.addAnnotations(photoArray)
-
         }
         
     }
@@ -161,7 +154,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             let photo:Photo = Photo(photo: image as UIImage, location: currentLocation)
             savePhotoToCloud(photo)
-            
         } else {
             // Something went wrong
         }
