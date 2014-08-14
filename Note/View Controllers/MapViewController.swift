@@ -29,6 +29,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
 
     override func viewDidLoad () {
         super.viewDidLoad()
+
+        initializeLocationManager()
         
         self.view.addSubview(mapView)
         mapView.frame = UIScreen.mainScreen().bounds
@@ -39,10 +41,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         let cameraButtonHeight:CGFloat = 80.0
         cameraButton.frame = CGRectMake(0, mapView.frame.height - cameraButtonHeight, mapView.frame.width, cameraButtonHeight)
         cameraButton.backgroundColor = UIColor.whiteColor()
-                
+        
         cameraButton.addTarget(self, action: "cameraButtonTapped", forControlEvents: .TouchUpInside)
         
-        initializeLocationManager()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name: UIApplicationWillEnterForegroundNotification, object: nil);
+    }
+
+    func applicationWillEnterForeground () {
+        println("applicationWillEnterForeground")
+        
+        if (currentLocation) {
+            queryPhotosNearLocation(currentLocation)
+        }
     }
     
     func initializeLocationManager () {
@@ -97,8 +107,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UIImagePic
         
         let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
         publicDatabase.saveRecord(photoRecord, completionHandler: { (record, error) -> Void in
-            println(record)
-            println(error)
+            if (self.currentLocation) {
+                self.queryPhotosNearLocation(self.currentLocation)
+            }
         })
     }
     
