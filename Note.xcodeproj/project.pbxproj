@@ -15,6 +15,7 @@
 		ED4D0530195F8CD800FD1ADD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED4D052F195F8CD800FD1ADD /* MapKit.framework */; };
 		ED4D0532195F8EC800FD1ADD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4D0531195F8EC800FD1ADD /* MapViewController.swift */; };
 		EDCD7274199C2F4F001CE7FB /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCD7273199C2F4F001CE7FB /* ImageViewController.swift */; };
+		EDCE011E19A2E79B006FBFD6 /* CurrentUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE011D19A2E79B006FBFD6 /* CurrentUserState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		ED4D052F195F8CD800FD1ADD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		ED4D0531195F8EC800FD1ADD /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = "View Controllers/MapViewController.swift"; sourceTree = "<group>"; };
 		EDCD7273199C2F4F001CE7FB /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
+		EDCE011D19A2E79B006FBFD6 /* CurrentUserState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUserState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				ED4D0531195F8EC800FD1ADD /* MapViewController.swift */,
+				EDCE011D19A2E79B006FBFD6 /* CurrentUserState.swift */,
 			);
 			name = "VIew Controllers";
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCE011E19A2E79B006FBFD6 /* CurrentUserState.swift in Sources */,
 				ED47CCB0199AFBB90000535C /* Photo.swift in Sources */,
 				ED4D0532195F8EC800FD1ADD /* MapViewController.swift in Sources */,
 				EDCD7274199C2F4F001CE7FB /* ImageViewController.swift in Sources */,

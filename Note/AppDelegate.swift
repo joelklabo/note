@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
     var window: UIWindow?
+    var backgroundQueue = NSOperationQueue.mainQueue()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
@@ -21,7 +23,53 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.makeKeyAndVisible()
         
         self.window!.rootViewController = MapViewController(nibName: nil, bundle: nil)
-                
+        
+        
+        if (!NSUserDefaults.standardUserDefaults().objectForKey("currentUserID")) {
+            // Query the private DB for user info
+            let privateDatabase = CKContainer.defaultContainer().privateCloudDatabase
+            let any = NSPredicate(value: true)
+            let currentUserQuery = CKQuery(recordType: "CurrentUser", predicate: any)
+            privateDatabase.performQuery(currentUserQuery, inZoneWithID: nil, completionHandler: { (results:[AnyObject]!, error:NSError!) -> Void in
+                var resultsArray = results as [CKRecord]
+                if (resultsArray.count > 0) {
+                    println(resultsArray)
+                } else {
+                    let currentUserRecord = CKRecord(recordType: "CurrentUser")
+                    currentUserRecord.setValue(NSUUID.UUID().UUIDString, forKey: "userID")
+                    privateDatabase.saveRecord(currentUserRecord, completionHandler: { (userRecord, error) -> Void in
+                        // User record was successfully saved. Add it to user defaults
+                        if (userRecord) {
+                            NSUserDefaults.standardUserDefaults().setObject(userRecord.valueForKey("userID"), forKey: "currentUserID")
+                            NSUserDefaults.standardUserDefaults().synchronize()
+                            println("created user \(userRecord)")
+                        }
+                    })
+                }
+            })
+        }
+        
+        // Find users friends
+        let discoverContactsOperation = CKDiscoverAllContactsOperation()
+        discoverContactsOperation.queuePriority = .Low
+        discoverContactsOperation.qualityOfService = .Background
+        discoverContactsOperation.discoverAllContactsCompletionBlock = { (users: [AnyObject]!, error: NSError!) -> Void in
+            println(users)
+            println(error)
+        }
+        
+        let discoverUserInfosOperation = CKDiscoverUserInfosOperation(emailAddresses: ["joelklabo@gmail.com"], userRecordIDs: nil)
+        discoverUserInfosOperation.queuePriority = .Low
+        discoverUserInfosOperation.qualityOfService = .Background
+        discoverUserInfosOperation.discoverUserInfosCompletionBlock = { (emails: [NSObject : AnyObject]!, recordIDs: [NSObject : AnyObject]!, error: NSError!) -> Void in
+            println(emails)
+            println(recordIDs)
+            println(error)
+        }
+        
+        backgroundQueue.addOperation(discoverContactsOperation)
+        backgroundQueue.addOperation(discoverUserInfosOperation)
+        
         return true
     }
 
