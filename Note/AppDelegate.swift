@@ -22,19 +22,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.whiteColor()
         self.window!.makeKeyAndVisible()
         
-        self.window!.rootViewController = MapViewController(nibName: nil, bundle: nil)
+        if (!CurrentUserState().userAvailable()) {
+            // No user available yet, show the signup view controller
+            self.window!.rootViewController = SignUpViewController(nibName: nil, bundle: nil)
+        } else {
+            // User is available show mainViewController
+            self.window!.rootViewController = MapViewController(nibName: nil, bundle: nil)
+        }
         
         
+        // If the user default is not set assume the user has not been created.
         if (!NSUserDefaults.standardUserDefaults().objectForKey("currentUserID")) {
-            // Query the private DB for user info
+            // Query the private DB for user info if we find something, show some info to inform the user they may have already gone through this process
             let privateDatabase = CKContainer.defaultContainer().privateCloudDatabase
             let any = NSPredicate(value: true)
             let currentUserQuery = CKQuery(recordType: "CurrentUser", predicate: any)
             privateDatabase.performQuery(currentUserQuery, inZoneWithID: nil, completionHandler: { (results:[AnyObject]!, error:NSError!) -> Void in
                 var resultsArray = results as [CKRecord]
                 if (resultsArray.count > 0) {
+                    // We found some records for the user, so they probably do exist. Maybe just bail out at this point
                     println(resultsArray)
                 } else {
+                    // Here is where we create the user if necessary.
                     let currentUserRecord = CKRecord(recordType: "CurrentUser")
                     currentUserRecord.setValue(NSUUID.UUID().UUIDString, forKey: "userID")
                     privateDatabase.saveRecord(currentUserRecord, completionHandler: { (userRecord, error) -> Void in
